@@ -1,6 +1,10 @@
-# Admin Subdomain (Host-based Rewrite)
-http://admin.briahnasbeauty.com/*  /dashboard.html  200!
-https://admin.briahnasbeauty.com/*  /dashboard.html  200!
+# Admin Subdomain - Force Root to Dashboard
+http://admin.briahnasbeauty.com/   /dashboard.html   200!
+https://admin.briahnasbeauty.com/   /dashboard.html   200!
 
-# Fallback for SPA
+# Admin Subdomain - Allow existing assets, fallback to Dashboard for client-routing
+http://admin.briahnasbeauty.com/*  /dashboard.html   200
+https://admin.briahnasbeauty.com/*  /dashboard.html   200
+
+# Main Site (Fallback)
 /* /index.html 200
