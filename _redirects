@@ -1,0 +1,6 @@
+# Admin Subdomain (Netlify Host-based redirection)
+/adm-root /dashboard.html 200
+/admin/* /dashboard.html 200
+
+# Fallback for SPA
+/* /index.html 200

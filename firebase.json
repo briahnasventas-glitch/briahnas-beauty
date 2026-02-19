@@ -1,0 +1,40 @@
+{
+    "hosting": [
+        {
+            "target": "app",
+            "public": ".",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**",
+                "admin/**",
+                "dashboard.html"
+            ],
+            "rewrites": [
+                {
+                    "source": "**",
+                    "destination": "/index.html"
+                }
+            ]
+        },
+        {
+            "target": "admin",
+            "public": ".",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ],
+            "rewrites": [
+                {
+                    "source": "**",
+                    "destination": "/dashboard.html"
+                }
+            ]
+        }
+    ],
+    "firestore": {
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+    }
+}

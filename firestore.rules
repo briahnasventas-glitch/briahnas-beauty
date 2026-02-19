@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Productos - Todos leen, solo ADMINS autenticados escriben
+    match /productos/{productId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null && 
+          (request.auth.token.email == 'briahnas.ventas@gmail.com' || 
+           request.auth.token.email == 'briahnasbeauty@gmail.com');
+    }
+    
+    // Usuarios - Solo el dueño ve sus datos
+    match /usuarios/{userId} {
+      allow read, write: if request.auth != null && 
+                           request.auth.uid == userId;
+    }
+
+    // Carritos - Solo el dueño
+    match /carritos/{userId} {
+      allow read, write: if request.auth != null && 
+                           request.auth.uid == userId;
+    }
+    
+    // Favoritos - Solo el dueño
+    match /favoritos/{favId} {
+      allow read, delete, update: if request.auth != null && 
+                                  request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && 
+                      request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Pedidos - Solo el dueño
+    match /pedidos/{pedidoId} {
+      allow read, delete, update: if request.auth != null && 
+                                  request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && 
+                      request.auth.uid == request.resource.data.userId;
+    }
+  }
+}

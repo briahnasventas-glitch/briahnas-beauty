@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Briahna's Beauty</title>
+
+    <!-- Private Area -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+    <!-- Root style.css -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── LUXURY DASHBOARD OVERRIDES ── */
+        :root {
+            --admin-primary: linear-gradient(135deg, var(--lilac-deep), #764ba2);
+            --admin-accent: linear-gradient(135deg, #f093fb, var(--pink-accent));
+        }
+
+        .admin-pagination-btn {
+            background: var(--white);
+            border: 1px solid var(--border-soft);
+            color: var(--lilac-deep);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .admin-pagination-btn:hover:not(:disabled) {
+            background: var(--lilac-whisper);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .admin-pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: var(--snow);
+        }
+
+        body {
+            background: var(--grad-page);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 30px;
+            font-family: var(--font-body);
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ── Header Luxury ── */
+        .admin-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 25px 40px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .admin-brand-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--admin-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 28px;
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .admin-header h1 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            background: var(--admin-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        /* ── Stats Grid ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-soft);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .icon {
+            width: 50px;
+            height: 50px;
+            background: var(--admin-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        /* ── Controls ── */
+        .admin-controls {
+            background: var(--glass-bg);
+            padding: 25px;
+            border-radius: var(--radius-md);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            font-size: 14px;
+            background: var(--white);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--lilac);
+        }
+
+        .admin-select {
+            padding: 14px 20px;
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            background: var(--white);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* ── Product Grid Luxury ── */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .admin-p-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-soft);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .admin-p-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .admin-p-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .admin-p-info {
+            padding: 25px;
+        }
+
+        .admin-p-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--lilac-deep);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .admin-p-price {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin: 10px 0;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-luxury {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-edit {
+            background: var(--lilac-whisper);
+            color: var(--lilac-deep);
+        }
+
+        .btn-edit:hover {
+            background: var(--lilac-light);
+        }
+
+        .btn-delete {
+            background: #FFF0F0;
+            color: #FF4D4D;
+        }
+
+        .btn-delete:hover {
+            background: #FFE5E5;
+        }
+
+        /* ── Modal Luxury ── */
+        .admin-modal-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .upload-luxury {
+            border: 2px dashed var(--lilac-soft);
+            background: var(--lilac-whisper);
+            padding: 40px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-luxury:hover {
+            border-color: var(--lilac-deep);
+            background: var(--lilac-light);
+        }
+
+        .upload-luxury i {
+            font-size: 40px;
+            color: var(--lilac-deep);
+            margin-bottom: 15px;
+        }
+
+        /* ── Restricted Overlay ── */
+        #restricted-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--grad-dark);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .admin-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 1 !important;
+            pointer-events: all !important;
+        }
+
+        .admin-modal-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .image-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .preview-img {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="restricted-overlay">
+        <i class="fas fa-lock" style="font-size: 60px; margin-bottom: 25px;"></i>
+        <h2>Acceso Restringido</h2>
+        <p>Esta área solo está disponible para Fabián y Eunice.</p>
+        <a href="index.html" class="btn-luxury"
+            style="background: var(--admin-primary); color: white; text-decoration: none;">Volver a la Tienda</a>
+    </div>
+
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="admin-brand">
+                <img src="https://res.cloudinary.com/dz9ec6j1b/image/upload/v1771337191/jvxhbvppke48khdcenl2.png"
+                    alt="Briahna's Beauty" style="height: 160px; width: auto; object-fit: contain;">
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <a href="index.html" class="btn-luxury"
+                    style="background: var(--admin-primary); color: white; text-decoration: none;">
+                    <i class="fas fa-store"></i> Tienda
+                </a>
+                <button class="btn-luxury btn-delete" onclick="AdminLogic.logout()">
+                    <i class="fas fa-sign-out-alt"></i> Salir
+                </button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-box"></i></div>
+                <h3>Productos</h3>
+                <div class="value" id="stat-total-p">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                <h3>Valor Stock</h3>
+                <div class="value" id="stat-value">L. 0</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-layer-group"></i></div>
+                <h3>Categorías</h3>
+                <div class="value" id="stat-cats">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-cubes"></i></div>
+                <h3>Stock Total</h3>
+                <div class="value" id="stat-stock">0</div>
+            </div>
+        </div>
+
+        <div class="admin-controls">
+            <button class="btn-luxury" style="background: var(--admin-primary); color: white;"
+                onclick="AdminUI.openModal()">
+                <i class="fas fa-plus"></i> Agregar Producto
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="admin-search" placeholder="Filtrar por nombre..." onkeyup="AdminLogic.filter()">
+            </div>
+            <select class="admin-select" id="admin-per-page" onchange="AdminLogic.updatePerPage(this.value)">
+                <option value="10">10 por página</option>
+                <option value="20">20 por página</option>
+                <option value="30">30 por página</option>
+                <option value="50">50 por página</option>
+                <option value="100">100 por página</option>
+            </select>
+            <select class="admin-select" id="admin-cat-filter" onchange="AdminLogic.filter()">
+                <option value="">Todas las categorías</option>
+                <option value="Skincare">Skincare</option>
+                <option value="Maquillaje">Maquillaje</option>
+                <option value="Cabello">Cabello</option>
+                <option value="Cuerpo">Cuerpo</option>
+                <option value="Fragancias">Fragancias</option>
+                <option value="Herramientas">Herramientas</option>
+            </select>
+        </div>
+
+        <div class="products-grid" id="admin-grid">
+            <!-- Loaded via JS -->
+        </div>
+
+        <!-- Paginación -->
+        <div id="admin-pagination"
+            style="margin-top: 40px; display: flex; justify-content: center; gap: 10px; padding-bottom: 50px;"></div>
+    </div>
+
+    <!-- ═══ MODAL ═══ -->
+    <div class="admin-modal-overlay" id="admin-modal" style="display:none">
+        <div class="admin-modal-content">
+            <button onclick="AdminUI.closeModal()"
+                style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); z-index: 10;">✕</button>
+            <h2 id="modal-title"
+                style="font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 30px; color: var(--charcoal); text-align: center;">
+                Gestionar Producto</h2>
+
+            <form id="admin-form" onsubmit="AdminLogic.save(event)">
+                <input type="hidden" id="f-id">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="grid-column: 1 / -1;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Imagen del Producto</label>
+                        <div class="upload-luxury" onclick="AdminLogic.openWidget(event)">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Sube imágenes o pega un enlace abajo</p>
+                        </div>
+                        <div id="image-previews" class="image-preview-grid"></div>
+                        <div style="margin-top: 10px;">
+                            <input type="text" id="f-manual-img"
+                                placeholder="O pega el URL de la imagen aquí (opcional)"
+                                style="width: 100%; padding: 10px; border: 1px solid var(--border-soft); border-radius: 8px; font-size: 13px;">
+                        </div>
+                    </div>
+
+                    <div style="grid-column: 1 / -1;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Nombre *</label>
+                        <input type="text" id="f-name" required
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Precio Detalle (L.)
+                            *</label>
+                        <input type="number" step="0.01" id="f-price" required
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Precio Mayorista (L.)
+                            *</label>
+                        <input type="number" step="0.01" id="f-priceWholesale" required
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Categoría *</label>
+                        <select id="f-cat" required
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px;">
+                            <option value="Skincare">Skincare</option>
+                            <option value="Maquillaje">Maquillaje</option>
+                            <option value="Cabello">Cabello</option>
+                            <option value="Cuerpo">Cuerpo</option>
+                            <option value="Fragancias">Fragancias</option>
+                            <option value="Accesorios">Accesorios</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Stock Disponible</label>
+                        <input type="number" id="f-stock" value="0"
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px;">
+                    </div>
+
+                    <!-- V12: Featured Product Checkbox -->
+                    <div
+                        style="grid-column: 1 / -1; display:flex; align-items:center; gap:10px; padding:10px; background:var(--lilac-whisper); border-radius:8px;">
+                        <input type="checkbox" id="f-featured"
+                            style="width:20px; height:20px; accent-color:var(--lilac-deep);">
+                        <label for="f-featured" style="cursor:pointer; font-weight:500; color:var(--text-primary);">
+                            Destacar en Página de Inicio (Cult Favorites)
+                        </label>
+                    </div>
+
+                    <div style="grid-column: 1 / -1;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Descripción</label>
+                        <textarea id="f-desc" rows="3"
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px;"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; display: flex; gap: 15px;">
+                    <button type="submit"
+                        style="flex: 1; padding: 15px; background: var(--admin-primary); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">Guardar
+                        Cambios</button>
+                    <button type="button" onclick="AdminUI.closeModal()"
+                        style="flex: 1; padding: 15px; background: var(--lilac-whisper); color: var(--lilac-deep); border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Root) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Cloudinary Widget -->
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+
+    <!-- Admin JS Bundle (Centralized) -->
+    <script src="js/admin/admin-ui.js"></script>
+    <script src="js/admin/admin-logic.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda | Briahna's Beauty</title>
+
+    <!-- SEO & Identity -->
+    <meta name="description"
+        content="Explora nuestra colección completa de cosméticos artesanales. Encuentra tu próxima fragancia, suero o labial favorito.">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=4">
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-orb ambient-orb--1"></div>
+    <div class="ambient-orb ambient-orb--2"></div>
+
+    <header id="main-header">
+        <div class="container nav-wrapper">
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+            <a href="index.html" class="logo">
+                <img src="https://res.cloudinary.com/dz9ec6j1b/image/upload/v1770787731/w0oovacpv6a1eoqjqoa5.png"
+                    alt="Briahna's Beauty">
+                <span style="vertical-align: middle;">BRIAHNA'S</span>
+            </a>
+            <nav class="desktop-nav">
+                <a href="shop.html" class="nav-link" style="color:var(--lilac-deep)">Tienda</a>
+                <a href="index.html#featured" class="nav-link">Colecciones</a>
+                <a href="favorites.html" class="nav-link">Favoritos</a>
+            </nav>
+            <div class="nav-icons">
+                <button class="icon-btn" id="user-btn" onclick="UI.openAuth()" aria-label="Usuario">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </button>
+                </button>
+                <button class="icon-btn" onclick="UI.openSearch()">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="9" r="7" />
+                        <path d="M15 15l4 4" />
+                    </svg>
+                </button>
+                <button class="icon-btn fav-indicator" onclick="location.href='favorites.html'">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M19 6.7C19 3.5 16.5 1 13.3 1c-2 0-3.3 1.3-3.3 1.3S8.7 1 6.7 1C3.5 1 1 3.5 1 6.7c0 6.3 9 12.3 9 12.3s9-6 9-12.3z" />
+                    </svg>
+                    <span class="badge fav-badge">0</span>
+                </button>
+                <button class="icon-btn" onclick="UI.openCart()">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 6h12l-1.5 9H7.5L6 6zM6 6L5 1H1" />
+                        <circle cx="9" cy="19" r="1" />
+                        <circle cx="15" cy="19" r="1" />
+                    </svg>
+                    <span class="badge cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ AUTH MODAL ═══ -->
+    <div class="modal-overlay" id="auth-modal" style="display:none">
+        <div class="auth-modal">
+            <button class="modal-close" onclick="UI.closeAuth()">✕</button>
+
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2>Iniciar Sesión</h2>
+                <input type="email" id="login-email" placeholder="Email">
+                <input type="password" id="login-password" placeholder="Contraseña">
+                <button onclick="Auth.login()" class="btn-primary"
+                    style="width:100%; margin-bottom:12px">Entrar</button>
+                <p style="text-align:center; margin-bottom:12px"><a onclick="Auth.showRecovery()"
+                        style="color:var(--text-muted); cursor:pointer; font-size:0.85rem">¿Olvidaste tu contraseña?</a>
+                </p>
+                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem">¿No tienes cuenta? <a
+                        onclick="Auth.showRegister()"
+                        style="color:var(--lilac-deep); cursor:pointer; font-weight:500">Regístrate</a></p>
+            </div>
+
+            <!-- Recovery Form -->
+            <div id="recovery-form" style="display:none">
+                <h2>Recuperar Contraseña</h2>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px">Ingresa tu email y te
+                    enviaremos un enlace para restablecer tu contraseña.</p>
+                <input type="email" id="recovery-email" placeholder="Email">
+                <button onclick="Auth.resetPassword()" class="btn-primary" style="width:100%; margin-bottom:12px">Enviar
+                    Enlace</button>
+                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem"><a onclick="Auth.showLogin()"
+                        style="color:var(--lilac-deep); cursor:pointer; font-weight:500">Volver al inicio</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" style="display:none">
+                <h2>Crear Cuenta</h2>
+                <input type="text" id="register-name" placeholder="Nombre completo">
+                <input type="email" id="register-email" placeholder="Email">
+                <input type="password" id="register-password" placeholder="Contraseña (min 6 caracteres)">
+
+                <div
+                    style="background:var(--lilac-whisper); border-left:3px solid var(--lilac); padding:10px 15px; margin-bottom:15px; border-radius:4px">
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin:0">
+                        <i class="fas fa-info-circle"></i> <strong>Importante:</strong> Al registrarte, recibirás un
+                        correo de verificación. Si no lo ves, <u>revisa tu carpeta de SPAM</u>.
+                    </p>
+                </div>
+
+                <button onclick="Auth.register()" class="btn-primary"
+                    style="width:100%; margin-bottom:12px">Registrar</button>
+                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem">¿Ya tienes cuenta? <a
+                        onclick="Auth.showLogin()"
+                        style="color:var(--lilac-deep); cursor:pointer; font-weight:500">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" onclick="UI.closeCart()"></div>
+    <aside class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3><button class="cart-close" onclick="UI.closeCart()">✕</button>
+        </div>
+        <div class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-summary"></div><button class="cart-checkout" onclick="Cart.checkoutWhatsApp()">Finalizar
+                Compra</button>
+        </div>
+    </aside>
+
+    <div class="modal-overlay" id="quick-view-modal">
+        <div class="quick-view">
+            <div class="quick-view__gallery"><img src="" alt=""><button class="quick-view__close"
+                    onclick="UI.closeQuickView()">✕</button></div>
+            <div class="quick-view__info"></div>
+        </div>
+    </div>
+
+    <main style="padding-top: 80px;">
+        <div class="container">
+            <!-- Hidden redundant header to remove space -->
+            <div class="section-header reveal" style="display: none;">
+                <div class="eyebrow">Catálogo Completo</div>
+                <h2>Explora Nuestra Belleza</h2>
+                <p>Descubre más de 1,000 productos diseñados para resaltar tu esencia única.</p>
+            </div>
+
+            <div class="shop-layout">
+                <!-- Sidebar Filters -->
+                <aside class="filters-sidebar">
+                    <div class="filters-panel">
+                        <div class="filter-group">
+                            <div class="filter-group__title">Categorías</div>
+                            <div class="filter-option" data-filter="category" data-value="skincare">
+                                <div class="filter-checkbox"></div> Skincare
+                            </div>
+                            <div class="filter-option" data-filter="category" data-value="makeup">
+                                <div class="filter-checkbox"></div> Maquillaje
+                            </div>
+                            <div class="filter-option" data-filter="category" data-value="haircare">
+                                <div class="filter-checkbox"></div> Cabello
+                            </div>
+                            <div class="filter-option" data-filter="category" data-value="body">
+                                <div class="filter-checkbox"></div> Cuerpo
+                            </div>
+                            <div class="filter-option" data-filter="category" data-value="fragrance">
+                                <div class="filter-checkbox"></div> Fragancias
+                            </div>
+                            <div class="filter-option" data-filter="category" data-value="Accesorios">
+                                <div class="filter-checkbox"></div> Accesorios
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-group__title">Tipo de Piel</div>
+                            <div class="filter-option" data-filter="skinType" data-value="dry">
+                                <div class="filter-checkbox"></div> Piel Seca
+                            </div>
+                            <div class="filter-option" data-filter="skinType" data-value="oily">
+                                <div class="filter-checkbox"></div> Piel Grasa
+                            </div>
+                            <div class="filter-option" data-filter="skinType" data-value="sensitive">
+                                <div class="filter-checkbox"></div> Piel Sensible
+                            </div>
+                            <div class="filter-option" data-filter="skinType" data-value="all">
+                                <div class="filter-checkbox"></div> Todo Tipo
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-group__title">Ver por página</div>
+                            <select id="per-page-select-sidebar"
+                                style="width:100%; padding:12px; border:1px solid var(--border-soft); border-radius: var(--radius-md);">
+                                <option value="10">10 productos</option>
+                                <option value="20" selected>20 productos</option>
+                                <option value="50">50 productos</option>
+                                <option value="100">100 productos</option>
+                            </select>
+                        </div>
+
+                        <button class="btn-ghost" style="width:100%" onclick="Products.clearFilters()">Limpiar
+                            Filtros</button>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <section class="shop-content">
+                    <!-- Shop Hero Banner -->
+                    <div class="shop-banner">
+                        <div class="shop-banner__content">
+                            <h3>Esencia y Estilo</h3>
+                            <p>Descubre nuestra selección premium para realzar tu belleza natural.</p>
+                        </div>
+                    </div>
+
+                    <div class="active-filters"></div>
+                    <div style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">
+                        Mostrando <span class="result-count">0</span> productos
+                    </div>
+                    <div class="product-grid"></div>
+                    <!-- Pagination force visible -->
+                    <div class="pagination"></div>
+                </section>
+            </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Briahna's Beauty</h3>
+                    <p>Tu tienda de confianza para productos de belleza y cosméticos en Honduras.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/share/1AK19UCqoa/" target="_blank" class="social-icon"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/briahnasbeauty" target="_blank" class="social-icon"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://wa.me/50497738535" target="_blank" class="social-icon"><i
+                                class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorías</h4>
+                    <a href="shop.html?cat=makeup">Maquillaje</a>
+                    <a href="shop.html?cat=skincare">Skincare</a>
+                    <a href="shop.html?cat=haircare">Cabello</a>
+                    <a href="shop.html?cat=fragrance">Fragancias</a>
+                    <a href="shop.html?cat=Accesorios">Accesorios</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Información</h4>
+                    <a href="#">Sobre Nosotros</a>
+                    <a href="#">Envíos</a>
+                    <a href="#">Políticas</a>
+                    <a href="#">Preguntas Frecuentes</a>
+                    <a href="#">Contacto</a>
+                </div>
+                <div class="footer-col footer-contact">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Tegucigalpa, Honduras</p>
+                    <p><i class="fas fa-phone"></i> +504 9773-8535</p>
+                    <p><i class="fas fa-envelope"></i> briahnasbeauty@gmail.com</p>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp: +504 9773-8535</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Briahna's Beauty. Todos los derechos reservados.</span>
+                <span>Desarrollado con ♥ en Honduras</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/50497738535" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js?v=3"></script>
+    <script src="js/auth.js?v=3"></script>
+    <script src="js/product-generator.js?v=3"></script>
+    <script src="js/cart.js?v=3"></script>
+    <script src="js/ui.js?v=3"></script>
+    <script src="js/products.js?v=3"></script>
+    <script>
+        // Global Error Handler
+        window.addEventListener('error', function (e) {
+            if (e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
+                if (e.target.src.includes('via.placeholder.com')) {
+                    e.target.src = 'https://placehold.co/400x400/e1bee7/5b2c6f?text=Sin+Imagen';
+                }
+            }
+        }, true);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Auth.init();
+            Cart.init();
+            Favorites.init();
+            Cart.subscribe(UI.renderCart);
+            Favorites.subscribe(UI.renderFavBadge);
+            UI.initHeaderScroll();
+            UI.initMobileMenu();
+            Products.init();
+        });
+    </script>
+</body>
+
+</html>

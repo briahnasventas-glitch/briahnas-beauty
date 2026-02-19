@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Briahna's Beauty | The Art of Self-Care</title>
+
+    <!-- SEO & Identity -->
+    <meta name="description"
+        content="Descubre cosméticos premium artesanales. Skincare, maquillaje y fragancias de lujo diseñados para elevar tu ritual de belleza.">
+    <meta name="keywords"
+        content="cosméticos de lujo, skincare, maquillaje artesanal, belleza premium, briahnas beauty, cuidado de la piel, self-care">
+    <meta name="author" content="Briahna's Beauty">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+
+    <!-- Open Graph / Social Media (WhatsApp) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://briahnasbeauty.com/">
+    <meta property="og:title" content="Briahna's Beauty | The Art of Self-Care">
+    <meta property="og:description"
+        content="Cosmética de lujo y rituales de belleza. Descubre nuestra colección exclusiva.">
+    <meta property="og:image" content="https://briahnasbeauty.com/images/luxury-v8.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Briahna's Beauty">
+    <meta name="twitter:description" content="El arte del cuidado personal. Cosmética premium.">
+    <meta name="twitter:image" content="https://briahnasbeauty.com/images/luxury-v8.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Subdomain Redirection (admin.briahnasbeauty.com -> dashboard.html) -->
+    <script>
+        if (window.location.hostname === 'admin.briahnasbeauty.com' && window.location.pathname === '/') {
+            window.location.href = '/dashboard.html';
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Ambient Orbs -->
+    <div class="ambient-orb ambient-orb--1"></div>
+    <div class="ambient-orb ambient-orb--2"></div>
+    <div class="ambient-orb ambient-orb--3"></div>
+
+    <!-- ═══ HEADER ═══ -->
+    <header id="main-header">
+        <div class="container nav-wrapper">
+            <div class="menu-toggle"><span></span><span></span><span></span></div>
+            <a href="index.html" class="logo">
+                <img src="https://res.cloudinary.com/dz9ec6j1b/image/upload/v1770787731/w0oovacpv6a1eoqjqoa5.png"
+                    alt="Briahna's Beauty"
+                    style="width: auto; object-fit: contain; vertical-align: middle; margin-right: 8px;">
+                <span style="vertical-align: middle;">BRIAHNA'S</span>
+            </a>
+            <nav class="desktop-nav">
+                <a href="shop.html" class="nav-link">Tienda</a>
+                <a href="shop.html#skincare" class="nav-link">Skincare</a>
+                <a href="shop.html#makeup" class="nav-link">Maquillaje</a>
+                <a href="favorites.html" class="nav-link">Favoritos</a>
+            </nav>
+            <div class="nav-icons">
+                <button class="icon-btn" id="user-btn" onclick="UI.openAuth()" aria-label="Usuario">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </button>
+                </button>
+                <button class="icon-btn" onclick="UI.openSearch()" aria-label="Buscar">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="9" r="7" />
+                        <path d="M15 15l4 4" />
+                    </svg>
+                </button>
+                <button class="icon-btn fav-indicator" onclick="location.href='favorites.html'" aria-label="Favoritos">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M19 6.7C19 3.5 16.5 1 13.3 1c-2 0-3.3 1.3-3.3 1.3S8.7 1 6.7 1C3.5 1 1 3.5 1 6.7c0 6.3 9 12.3 9 12.3s9-6 9-12.3z" />
+                    </svg>
+                    <span class="badge fav-badge" style="display:none">0</span>
+                </button>
+                <button class="icon-btn" onclick="UI.openCart()" aria-label="Carrito">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 6h12l-1.5 9H7.5L6 6zM6 6L5 1H1" />
+                        <circle cx="9" cy="19" r="1" />
+                        <circle cx="15" cy="19" r="1" />
+                    </svg>
+                    <span class="badge cart-badge" style="display:none">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ AUTH MODAL ═══ -->
+    <div class="modal-overlay" id="auth-modal" style="display:none">
+        <div class="auth-modal">
+            <button class="modal-close" onclick="UI.closeAuth()">✕</button>
+
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2>Iniciar Sesión</h2>
+                <input type="email" id="login-email" placeholder="Email">
+                <input type="password" id="login-password" placeholder="Contraseña">
+                <button onclick="Auth.login()" class="btn-primary"
+                    style="width:100%; margin-bottom:12px">Entrar</button>
+                <p style="text-align:center; margin-bottom:12px"><a onclick="Auth.showRecovery()"
+                        style="color:var(--text-muted); cursor:pointer; font-size:0.85rem">¿Olvidaste tu contraseña?</a>
+                </p>
+                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem">¿No tienes cuenta? <a
+                        onclick="Auth.showRegister()"
+                        style="color:var(--lilac-deep); cursor:pointer; font-weight:500">Regístrate</a></p>
+            </div>
+
+            <!-- Recovery Form -->
+            <div id="recovery-form" style="display:none">
+                <h2>Recuperar Contraseña</h2>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px">Ingresa tu email y te
+                    enviaremos un enlace para restablecer tu contraseña.</p>
+                <input type="email" id="recovery-email" placeholder="Email">
+                <button onclick="Auth.resetPassword()" class="btn-primary" style="width:100%; margin-bottom:12px">Enviar
+                    Enlace</button>
+                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem"><a onclick="Auth.showLogin()"
+                        style="color:var(--lilac-deep); cursor:pointer; font-weight:500">Volver al inicio</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" style="display:none">
+                <h2>Crear Cuenta</h2>
+                <input type="text" id="register-name" placeholder="Nombre completo">
+                <input type="email" id="register-email" placeholder="Email">
+                <input type="password" id="register-password" placeholder="Contraseña (min 6 caracteres)">
+
+                <div
+                    style="background:var(--lilac-whisper); border-left:3px solid var(--lilac); padding:10px 15px; margin-bottom:15px; border-radius:4px">
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin:0">
+                        <i class="fas fa-info-circle"></i> <strong>Importante:</strong> Al registrarte, recibirás un
+                        correo de verificación. Si no lo ves, <u>revisa tu carpeta de SPAM</u>.
+                    </p>
+                </div>
+
+                <button onclick="Auth.register()" class="btn-primary"
+                    style="width:100%; margin-bottom:12px">Registrar</button>
+                <p style="text-align:center; color:var(--text-muted); font-size:0.9rem">¿Ya tienes cuenta? <a
+                        onclick="Auth.showLogin()"
+                        style="color:var(--lilac-deep); cursor:pointer; font-weight:500">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ SEARCH OVERLAY ═══ -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar productos, ingredientes...">
+            <button class="search-close" onclick="UI.closeSearch()">✕</button>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <!-- ═══ CART SIDEBAR ═══ -->
+    <div class="cart-overlay" onclick="UI.closeCart()"></div>
+    <aside class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button class="cart-close" onclick="UI.closeCart()">✕</button>
+        </div>
+        <div class="cart-items">
+            <div class="cart-empty">
+                <div class="cart-empty__icon">🛍</div>
+                <p>Tu carrito está vacío</p>
+            </div>
+        </div>
+        <div class="cart-footer" style="display:none">
+            <div class="cart-summary"></div>
+            <button class="cart-checkout" onclick="Cart.checkoutWhatsApp()">Finalizar Compra</button>
+        </div>
+    </aside>
+
+    <!-- ═══ QUICK VIEW MODAL ═══ -->
+    <div class="modal-overlay" id="quick-view-modal">
+        <div class="quick-view">
+            <div class="quick-view__gallery">
+                <img src="" alt="">
+                <button class="quick-view__close" onclick="UI.closeQuickView()">✕</button>
+            </div>
+            <div class="quick-view__info"></div>
+        </div>
+    </div>
+
+    <main>
+        <!-- ═══ HERO — Cinematic Split ═══ -->
+        <section class="hero-luxury">
+            <div class="hero-content">
+                <div class="hero-eyebrow">Colección Primavera 2026</div>
+                <h1>El Arte de <br><em>Cuidarte</em></h1>
+                <p>Innovación en belleza y cuidado personal. Fórmulas de lujo diseñadas para resaltar tu mejor versión.
+                </p>
+                <div class="hero-actions">
+                    <a href="shop.html" class="btn-primary">Explorar Tienda →</a>
+                    <a href="#featured" class="btn-ghost">Ver Colección</a>
+                </div>
+            </div>
+            <div class="hero-media">
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&q=80&w=1080"
+                    alt="Briahna's Beauty Collection">
+            </div>
+        </section>
+
+
+        <!-- ═══ FEATURED PRODUCTS ═══ -->
+        <section id="featured" class="products-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="eyebrow">Cuidados Para Ti</div>
+                    <h2>The Cult Favorites</h2>
+                    <p>Los productos más amados por nuestra comunidad de belleza</p>
+                </div>
+
+                <nav class="category-nav reveal">
+                    <button class="cat-pill active" onclick="Products.filterByCategory('all', this)">Todos</button>
+                    <button class="cat-pill" onclick="Products.filterByCategory('skincare', this)">✨ Skincare</button>
+                    <button class="cat-pill" onclick="Products.filterByCategory('makeup', this)">💄 Maquillaje</button>
+                    <button class="cat-pill" onclick="Products.filterByCategory('haircare', this)">💇 Cabello</button>
+                    <button class="cat-pill" onclick="Products.filterByCategory('body', this)">🧴 Cuerpo</button>
+                    <button class="cat-pill" onclick="Products.filterByCategory('fragrance', this)">🌸
+                        Fragancias</button>
+                    <button class="cat-pill" onclick="Products.filterByCategory('Accesorios', this)">🪮
+                        Accesorios</button>
+                </nav>
+
+                <div class="active-filters"></div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"
+                    class="reveal">
+                    <span class="result-count" style="font-size:.85rem;color:var(--text-muted)"></span>
+                    <select id="sort-select"
+                        style="padding:10px 18px;border:1.5px solid var(--border-soft);border-radius:var(--radius-full);font-size:.82rem;font-family:var(--font-body);background:#fff;color:var(--text-secondary);cursor:pointer;outline:none">
+                        <option value="featured">Destacados</option>
+                        <option value="price-low">Precio: Menor a Mayor</option>
+                        <option value="price-high">Precio: Mayor a Menor</option>
+                        <option value="newest">Más Nuevos</option>
+                        <option value="rating">Mejor Calificados</option>
+                        <option value="popular">Más Populares</option>
+                    </select>
+                    <div style="display:flex; align-items:center; gap:8px">
+                        <span style="font-size:0.8rem; color:var(--text-muted)">Ver:</span>
+                        <select id="per-page-select"
+                            style="padding:10px 14px;border:1.5px solid var(--border-soft);border-radius:var(--radius-full);font-size:.82rem;font-family:var(--font-body);background:#fff;color:var(--text-secondary);cursor:pointer;outline:none">
+                            <option value="12">12</option>
+                            <option value="24" selected>24</option>
+                            <option value="48">48</option>
+                            <option value="96">96</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-grid"></div>
+                <div class="pagination"></div>
+            </div>
+        </section>
+
+        <!-- ═══ EDITORIAL BANNER ═══ -->
+        <section style="padding:var(--space-3xl) 0;position:relative;z-index:1">
+            <div class="container">
+                <div class="reveal"
+                    style="background:var(--grad-dark);border-radius:var(--radius-xl);padding:clamp(40px,8vw,80px);display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;overflow:hidden;position:relative">
+                    <div>
+                        <div class="hero-eyebrow" style="color:var(--lilac-soft)">Membresía Exclusiva</div>
+                        <h2
+                            style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;font-style:italic;color:#fff;line-height:1.15;margin:16px 0">
+                            Únete al <span class="text-gradient">Beauty Club</span></h2>
+                        <p style="color:rgba(255,255,255,.6);margin-bottom:28px;font-size:.95rem">Acceso anticipado a
+                            lanzamientos, descuentos exclusivos y regalos de cumpleaños.</p>
+                        <div style="display:flex;gap:12px;flex-wrap:wrap">
+                            <input type="email" placeholder="Tu email"
+                                style="padding:14px 24px;border:1.5px solid rgba(255,255,255,.15);border-radius:var(--radius-full);background:rgba(255,255,255,.08);color:#fff;font-size:.9rem;width:260px;outline:none;font-family:var(--font-body)">
+                            <button class="btn-primary">Suscribirse</button>
+                        </div>
+                    </div>
+                    <div style="text-align:center">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=500&q=80"
+                            alt="Beauty Club"
+                            style="border-radius:var(--radius-lg);max-height:350px;width:100%;object-fit:cover;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FEATURES — Trust Section ═══ -->
+        <section class="features-section reveal">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3>Envíos a Todo Honduras</h3>
+                        <p>Tegucigalpa, San Pedro Sula y más</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Calidad Garantizada</h3>
+                        <p>Productos verificados</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h3>Precios Mayoristas</h3>
+                        <p>Descuentos especiales para revendedores</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3>Atención por WhatsApp</h3>
+                        <p>Respuesta inmediata a tus consultas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══ TESTIMONIALS — Customer Reviews ═══ -->
+        <section class="reviews-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="eyebrow">Experiencias Reales</div>
+                    <h2>Opiniones de Clientes</h2>
+                    <p>Lo que dicen quienes ya confían en Briahna's Beauty</p>
+                </div>
+
+                <div class="reviews-grid reveal">
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">"La calidad de los productos es increíble. Noté el cambio en mi piel
+                            desde la primera semana. ¡Súper recomendados!"</p>
+                        <div class="review-author">
+                            <div class="author-info">
+                                <strong>Ana Martínez</strong>
+                                <span>Cliente Verificada</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">"Excelente atención por WhatsApp. Resolvieron todas mis dudas y el pedido
+                            llegó rapidísimo a San Pedro Sula."</p>
+                        <div class="review-author">
+                            <div class="author-info">
+                                <strong>Karla Rodríguez</strong>
+                                <span>Emprendedora</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">"Los precios mayoristas son los mejores para mi negocio. Productos
+                            premium que mis clientes aman."</p>
+                        <div class="review-author">
+                            <div class="author-info">
+                                <strong>María José P.</strong>
+                                <span>Revendedora</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Briahna's Beauty</h3>
+                    <p>Tu tienda de confianza para productos de belleza y cosméticos en Honduras.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/share/1AK19UCqoa/" target="_blank" class="social-icon"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/briahnasbeauty" target="_blank" class="social-icon"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://wa.me/50497738535" target="_blank" class="social-icon"><i
+                                class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorías</h4>
+                    <a href="shop.html?cat=makeup">Maquillaje</a>
+                    <a href="shop.html?cat=skincare">Skincare</a>
+                    <a href="shop.html?cat=haircare">Cabello</a>
+                    <a href="shop.html?cat=fragrance">Fragancias</a>
+                    <a href="shop.html?cat=tools">Accesorios</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Información</h4>
+                    <a href="#">Sobre Nosotros</a>
+                    <a href="#">Envíos</a>
+                    <a href="#">Políticas</a>
+                    <a href="#">Preguntas Frecuentes</a>
+                    <a href="#">Contacto</a>
+                </div>
+                <div class="footer-col footer-contact">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Tegucigalpa, Honduras</p>
+                    <p><i class="fas fa-phone"></i> +504 3230-6262</p>
+                    <p><i class="fas fa-envelope"></i> briahnasbeauty@gmail.com</p>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp: +504 3230-6262</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Briahna's Beauty. Todos los derechos reservados.</span>
+                <span>Desarrollado con ♥ en Honduras</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/50497738535" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Font Awesome for Footer Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <!-- Scripts -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script src="js/product-generator.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/products.js"></script>
+    <script>
+        // Global Error Handler for Images (Fixes via.placeholder.com 404s)
+        window.addEventListener('error', function (e) {
+            if (e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
+                if (e.target.src.includes('via.placeholder.com') || !e.target.complete || e.target.naturalWidth === 0) {
+                    e.target.src = 'https://placehold.co/400x400/e1bee7/5b2c6f?text=Sin+Imagen';
+                }
+            }
+        }, true);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Auth.init();
+            Cart.init();
+            Favorites.init();
+            Cart.subscribe(UI.renderCart);
+            Favorites.subscribe(UI.renderFavBadge);
+            Products.init();
+            Products.renderFeatured(); // V12
+            UI.initScrollReveal();
+            UI.initHeaderScroll();
+            UI.initMobileMenu();
+
+            // Handle modal clicks
+            document.getElementById('quick-view-modal')?.addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) UI.closeQuickView();
+            });
+            document.getElementById('search-overlay')?.addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) UI.closeSearch();
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# Project specifics
+node_modules/
+.npm/
+.net/
+.gemini/
+.agent/
+brain/
+*.log
+
+# Firebase/Netlify temporary files
+.firebase/
+.netlify/
